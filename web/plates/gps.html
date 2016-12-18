@@ -1,0 +1,106 @@
+<div class="col-sm-12">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading"><span class="panel_label">GPS</span></div>
+			<div class="panel-body">
+				<div class="row">
+					<span class="col-xs-12">
+						<div class="map-container">
+							<div id="map_display" class="world-map" ng-attr-style="background-position:{{map_pos_x + 'px ' + map_pos_y + 'px'}}; width:{{map_width}}px; height:{{map_height}}px;">
+								<div class="mark-position" ng-style="{left: map_mark_x+'px', top: map_mark_y+'px'}">
+									<span class="fa fa-crosshairs"></span>
+								</div>
+							</div>
+						</div>
+					</span>
+				</div>
+				<div class="separator"></div>
+				<div class="row">
+					<strong class="col-xs-6 text-center">Location:</strong>
+					<strong class="col-xs-6 text-center">Track:</strong>
+                </div>
+				<div class="row">
+					<span class="col-xs-6 text-center">{{gps_lat}}, {{gps_lon}} &plusmn; {{gps_accuracy}} m <br> {{gps_alt}} &plusmn; {{gps_vert_accuracy}} ft  @ {{gps_vert_speed}} ft/min</span>
+					<span class="col-xs-6 text-center">{{gps_track}}&deg; @ {{gps_speed}} KTS</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading"><span class="panel_label">AHRS</span></div>
+			<div class="panel-body">
+				<div class="row">
+					<span class="col-xs-12">
+					    <canvas id="ahrs_display">
+        					your web browser doesn't support the &lt;canvas>&gt; element.
+    					</canvas>
+					</span>
+				</div>
+				<div class="separator"></div>
+				<div class="row">
+					<strong class="col-xs-3 text-center">Heading:</strong>
+					<strong class="col-xs-3 text-center">Pitch:</strong>
+					<strong class="col-xs-3 text-center">Roll:</strong>
+					<strong class="col-xs-3 text-center">P-Alt:</strong>
+				</div>
+				<div class="row">
+					<span class="col-xs-3 text-center">{{ahrs_heading}}&deg;</span>
+					<span class="col-xs-3 text-center">{{ahrs_pitch}}&deg;</span>
+					<span class="col-xs-3 text-center">{{ahrs_roll}}&deg;</span>
+					<span class="col-xs-3 text-center">{{ahrs_alt}} ft</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-sm-12">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="panel_label">Satellites</span>
+			</div>
+			<div class="panel-body towers-page">
+				<div class="row">
+					<span class="col-xs-3"><strong>Satellite</strong></span>
+					<!--<span class="col-xs-2 text-right"><strong>NMEA Code</strong></span>-->
+					<span class="col-xs-3 text-right"><strong>Elevation</strong></span>
+					<span class="col-xs-3 text-right"><strong>Azimuth</strong></span>
+					<span class="col-xs-3 text-right"><strong>Signal</strong></span>
+				</div>
+
+				<div class="row" ng-repeat="satellite in data_list | orderBy: 'SatelliteNMEA'">
+					<div class="separator"></div>
+					<span class="col-xs-3">{{satellite.SatelliteID}}<span ng-show="satellite.InSolution">&nbsp;&#x2705;</span></span>
+					<!--<span class="col-xs-2 text-right">{{satellite.SatelliteNMEA}}</span>-->
+					<span class="col-xs-3 text-right">{{satellite.Elevation < -5 ? "---" : satellite.Elevation}}&deg;</span>
+					<span class="col-xs-3 text-right">{{satellite.Azimuth < 0 ? "---" : satellite.Azimuth}}&deg;</span>
+					<span class="col-xs-3 text-right">{{satellite.Signal < 1 ? "---" : satellite.Signal}}<span style="font-size:50%">&nbsp;dB-Hz</span></span>
+				</div>
+			</div>
+
+			<div class="separator"></div>
+			<div class="panel-footer">
+				<div class="row">
+					<label class="col-xs-6">GPS solution:</label>
+					<span class="col-xs-6">{{SolutionText}}</span>
+				</div>
+				<div class="row">
+					<label class="col-xs-6">Summary:</label>
+					<span class="col-xs-6">{{Satellites}} in solution; {{GPS_satellites_seen}} seen; {{GPS_satellites_tracked}} tracked</span>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+
+<!--
+<div class="col-sm-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">Raw GPS / AHRS Data</div>
+		<div class="panel-body">
+			<pre>{{raw_data}}</pre>
+		</div>
+	</div>
+</div>
+-->
